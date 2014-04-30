@@ -1,0 +1,198 @@
+#|-------------------------------------------------------------------|
+#|RealMessager 1.0 by Arachiozaur                                    |
+#|If you are using the code for own purposes, add me in the credits. |
+#|-------------------------------------------------------------------|
+#Configuration start
+options:
+	isMessagingEnabled: true #True means that automessaging is enabled
+	scriptLoadMessage: true #Should script send a message to console that script is loaded?
+	prefix: &6<Real&4&lMessager&r&4>&2 #Prefix of the script
+	messageInterval: 30 ticks #Interval between sending messages
+	updateNotifyInterval: 1 hour #Interval between sending update notify
+	version: 1.0 #Do not change.
+#Configuration end
+#Updater code start
+every {@updateNotifyInterval}:
+	set {newestversion} to text from url "https://github.com/Arachiozaur/SkriptRealMessager/master/version.xml"
+	wait 1 tick
+	set {currentversion} to {@version}
+	if {currentversion} is not {newestversion}:
+		send "{@prefix} Script is up to date. Your version is %{currentversion}%. The newest version is %{newestversion}%." to console
+		send "{@prefix} &cPlugin is out of date. Please update it from:&f https://github.com/Arachiozaur/SkriptRealMessager" to console
+		stop
+#Updater code end
+#Script code start
+on script load:
+	if {@scriptLoadMessage} is true:
+		send "{@prefix} &1{@version} &2loaded." to the console
+		stop
+every {@messageInterval}:
+	if {@isMessagingEnabled} is true:
+		add 1 to {messagenumber}
+		wait 5 ticks
+		if {messagenumber} is 1:
+			if {message1} is set:
+				broadcast "%{message1}%"
+		if {messagenumber} is 2:
+			if {message2} is set:
+				broadcast "%{message2}%"
+		if {messagenumber} is 3:
+			if {message3} is set:
+				broadcast "%{message3}%"
+		if {messagenumber} is 4:
+			if {message4} is set:
+				broadcast "%{message4}%"
+		if {messagenumber} is 5:
+			if {message5} is set:
+				broadcast "%{message5}%"
+		if {messagenumber} is 6:
+			if {message6} is set:
+				broadcast "%{message6}%"
+		if {messagenumber} is 7:
+			if {message7} is set:
+				broadcast "%{message7}%"
+		if {messagenumber} is 8:
+			if {message8} is set:
+				broadcast "%{message8}%"
+		if {messagenumber} is 9:
+			if {message9} is set:
+				broadcast "%{message9}%"
+			set {messagenumber} to 0
+command /realmessager <text> [<text>] [<text>]:
+	aliases: realm, rm, rmessager
+	trigger:
+		if argument 1 is "help":
+			send "{@prefix}"
+			send "&9/realmessager &2version &r- checking if script is up to date"
+			send "&9/realmessager &2set [number] [message]&r - adding a message"
+			send "&9/realmessager &2clear [number]&r - removing a message"
+			send "&9/realmessager &2list&r - list of all messages"
+			send "&9/realmessager &2reload&r - reload script"
+			stop
+		if argument 1 is "reload":
+			execute console command "skript reload RealMessager"
+			send "{@prefix} has been reloaded." to player
+			stop
+		if argument 1 is "update":
+			set {newestversion} to text from url "https://raw.github.com/Arachiozaur/SkriptCityApartments/master/version.xml"
+			wait 1 tick
+			set {currentversion} to {@version}
+			if {currentversion} is not {newestversion}:
+				send "{@prefix} Your version is %{currentversion}%. The newest version is %{newestversion}%." to player
+				send "{@prefix} &cPlugin is out of date. Please update it from:&f https://github.com/Arachiozaur/SkriptRealMessager" to player
+				stop
+			else:
+				send "{@prefix} Your version is %{currentversion}%. Newest version is %{newestversion}%." to player
+				send "{@prefix} Script is up to date." to player
+				stop
+		if argument 1 is "list":
+			send "{@prefix}"
+			send "&2Message 1: %{message1}%"
+			send "&2Message 2: %{message2}%"
+			send "&2Message 3: %{message3}%"
+			send "&2Message 4: %{message4}%"
+			send "&2Message 5: %{message5}%"
+			send "&2Message 6: %{message6}%"
+			send "&2Message 7: %{message7}%"
+			send "&2Message 8: %{message8}%"
+			send "&2Message 9: %{message9}%"
+			stop
+		if argument 1 is "set":
+			if argument 2 is set:
+				if argument 3 is set:
+					if argument 2 is "1":
+						set {message1} to argument 3
+						send "{@prefix} Message 1 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "2":
+						set {message2} to argument 3
+						send "{@prefix} Message 2 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "3":
+						set {message3} to argument 3
+						send "{@prefix} Message 3 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "4":
+						set {message4} to argument 3
+						send "{@prefix} Message 4 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "5":
+						set {message5} to argument 3
+						send "{@prefix} Message 5 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "6":
+						set {message6} to argument 3
+						send "{@prefix} Message 6 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "7":
+						set {message7} to argument 3
+						send "{@prefix} Message 7 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "8":
+						set {message8} to argument 3
+						send "{@prefix} Message 8 has been set to &9%argument 3%&2."
+						stop
+					if argument 2 is "9":
+						set {message9} to argument 3
+						send "{@prefix} Message 9 has been set to &9%argument 3%&2."
+						stop
+				else:
+					send "{@prefix} You have to set the message."
+					stop
+			else:
+				send "{@prefix} You have to set the message number (1-9)."
+				stop
+		if argument 1 is "clear":
+			if argument 2 is set:
+				if argument 2 is "all":
+					clear {message1}
+					clear {message2}
+					clear {message3}
+					clear {message4}
+					clear {message5}
+					clear {message6}
+					clear {message7}
+					clear {message8}
+					clear {message9}
+					send "{@prefix} All messages have been cleared."
+					stop
+				if argument 2 is "1":
+					clear {message1}
+					send "{@prefix} Message 1 has been cleared."
+					stop
+				if argument 2 is "2":
+					clear {message2}
+					send "{@prefix} Message 2 has been cleared."
+					stop
+				if argument 2 is "3":
+					clear {message3}
+					send "{@prefix} Message 3 has been cleared."
+					stop
+				if argument 2 is "4":
+					clear {message4}
+					send "{@prefix} Message 4 has been cleared."
+					stop
+				if argument 2 is "5":
+					clear {message5}
+					send "{@prefix} Message 5 has been cleared."
+					stop
+				if argument 2 is "6":
+					clear {message6}
+					send "{@prefix} Message 6 has been cleared."
+					stop
+				if argument 2 is "7":
+					clear {message7}
+					send "{@prefix} Message 7 has been cleared."
+					stop
+				if argument 2 is "8":
+					clear {message8}
+					send "{@prefix} Message 8 has been cleared."
+					stop
+				if argument 2 is "9":
+					clear {message9}
+					send "{@prefix} Message 9 has been cleared."
+					stop
+			else:
+				send "{@prefix} You have to set the message number (1-9) or type 'all'."
+				stop
+#Script code start
